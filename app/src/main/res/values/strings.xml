@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">7Mig</string>
+    <string name="game_dialog_title">Simulador de Partides (7 i mig)</string>
+    <string name="start">Simular</string>
+    <string name="player_hint">nom del jugador;valor apostat</string>
+    <string name="seguir">SEGUIR</string>
+    <string name="plantarse">Plantarse</string>
+    <string name="end">Acabar</string>
+</resources>

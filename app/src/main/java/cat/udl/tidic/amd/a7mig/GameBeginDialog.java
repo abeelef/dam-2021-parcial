@@ -30,7 +30,7 @@ public class GameBeginDialog extends DialogFragment {
     private View rootView;
     private GameActivity activity;
 
-    public static GameBeginDialog newInstance(GameActivity activity) {
+    public static GameBeginDialog newInstance(GameActivity activity) { //dialog pot accedir als publics de gameactivity
         GameBeginDialog dialog = new GameBeginDialog();
         dialog.activity = activity;
         return dialog;
@@ -62,8 +62,6 @@ public class GameBeginDialog extends DialogFragment {
 
         gameSettingLayout = rootView.findViewById(R.id.gameEndLayout);
         players = rootView.findViewById(R.id.numeroJugadorsET);
-
-
         addTextWatchers();
     }
 
@@ -75,21 +73,39 @@ public class GameBeginDialog extends DialogFragment {
     }
     
     private void onDoneClicked() {
+        //faltaria implementar logica de quan els EditTexts estiguin buits que el botó "simular" no petes.
         List<String> noms = new ArrayList<>();
         List<Integer> apostes = new ArrayList<>();
+        boolean controlador = true;
 
         for (int i = 0; i < jugadores; i++) {
             EditText editText = gameSettingLayout.findViewById(20000+i);
             String value = editText.getText().toString();
             String nom = value.split(";")[0];
+            //comprovem requisit 2
+            if(nom.matches("^[a-z]{3,7}$")){
+                noms.add(i,nom);
+            }else{
+                editText.setError("No cumpleix els requisits mínims pel nom");
+                controlador = false;
+            }
             int aposta = Integer.parseInt(value.split(";")[1]);
-            noms.add(i,nom);
-            apostes.add(i,aposta);
+            if(aposta >= 5 && aposta <= 1000){
+                apostes.add(i,aposta);
+            }else{
+                editText.setError("No cumpleix els requisits mínims d'aposta");
+                controlador = false;
+            }
             Log.d(TAG, "noms:"+ noms.toString());
             Log.d(TAG, "apostes:"+ apostes.toString());
         }
+        if(controlador){
         dismiss();
+        activity.canviJugador(noms,apostes);
+        }
     }
+
+
 
 
     private void addTextWatchers() {

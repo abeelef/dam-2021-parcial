@@ -3,9 +3,11 @@ package cat.udl.tidic.amd.a7mig.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import cat.udl.tidic.amd.a7mig.GameActivity;
+
 public class PreferenceProvider {
 
-    private static String SHARED_PREFERENCES = "mPreferences";
+    public static String SHARED_PREFERENCES = "mPreferences";
 
     private static SharedPreferences sPreferences;
 
@@ -15,6 +17,6 @@ public class PreferenceProvider {
     public static void init(Context context) {
 
         sPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-
+        GameActivity.Banca(); //fem crida Requisit 1
     }
 }

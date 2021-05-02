@@ -72,30 +72,29 @@ public class GameBeginDialog extends DialogFragment {
         });
     }
     
-    private void onDoneClicked() {
+    private void onDoneClicked() { //També podria fer-se el metode de resetejar amb un break
         //faltaria implementar logica de quan els EditTexts estiguin buits que el botó "simular" no petes.
-        List<String> noms = new ArrayList<>();
+        List<String> noms = new ArrayList<>(); //com resetejem al fer click larraylist, si un valor d'entrada de nom;aposta no es vàlid, es sobreescriura en cada posicio.
         List<Integer> apostes = new ArrayList<>();
         boolean controlador = true;
 
         for (int i = 0; i < jugadores; i++) {
-            EditText editText = gameSettingLayout.findViewById(20000+i);
+            EditText editText = gameSettingLayout.findViewById(20000 + i);
             String value = editText.getText().toString();
             String nom = value.split(";")[0];
             //comprovem requisit 2
-            if(nom.matches("^[a-z]{3,7}$")){
-                noms.add(i,nom);
-            }else{
-                editText.setError("No cumpleix els requisits mínims pel nom");
-                controlador = false;
+            noms.add(i, nom);
+            if (!nom.matches("^[a-z]{3,7}$")) {
+            editText.setError("No cumpleix els requisits mínims pel nom");
+            controlador = false;
             }
             int aposta = Integer.parseInt(value.split(";")[1]);
-            if(aposta >= 5 && aposta <= 1000){
-                apostes.add(i,aposta);
-            }else{
+            apostes.add(i,aposta);
+            if(aposta < 5 && aposta > 1000){
                 editText.setError("No cumpleix els requisits mínims d'aposta");
                 controlador = false;
             }
+
             Log.d(TAG, "noms:"+ noms.toString());
             Log.d(TAG, "apostes:"+ apostes.toString());
         }
